@@ -5,8 +5,8 @@
   "main": "server.js",
   "scripts": {
     "prestart": "npm install",
-    "start": "forever server.js",
-    "watch": "forever -w server.js"
+    "start": "forever --minUptime 5000 --spinSleepTime 3000 server.js",
+    "watch": "forever --minUptime 5000 --spinSleepTime 3000 -w server.js"
   },
   "repository": {
     "type": "git",
@@ -24,5 +24,8 @@
     "koa-body": "^6.0.1",
     "koa-static": "^5.0.0",
     "uuid": "^9.0.0"
+  },
+  "dependencies": {
+    "@koa/cors": "^4.0.0"
   }
 }
