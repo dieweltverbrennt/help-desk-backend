@@ -7,13 +7,13 @@ class TicketController {
     }
 
     getAllTickets() {
-        const allTickets =  this.tickets.forEach((item) => new Ticket(item));
+        const allTickets =  this.tickets.map((item) => new Ticket(item));
         return allTickets;
     }
 
     getTicketById(id) {
-        const data = this.data.find((item) => item.id === id);
-        if (data) {
+        const data = this.tickets.find((item) => item.id === id);
+        if (data !== -1) {
             return data;
         } else {
             throw new Error('Invalid id');
@@ -26,6 +26,15 @@ class TicketController {
         console.log(this.tickets)
     }
 
+    deleteTicket(id) {
+        this.tickets = this.tickets.filter((item) => item.id !== id);
+    }
+
+    editTicket(id, name, description) {
+        const cur = this.getTicketById(id);
+        cur.name = name;
+        cur.description = description;
+    }
 
 }
 

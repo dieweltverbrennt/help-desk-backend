@@ -57,19 +57,61 @@ app.use(async ctx => {
 
     switch (method) {
         case 'allTickets':
-            ctx.response.body = tickets;
+            try {
+                const res = ticketController.getAllTickets();
+                ctx.response.body = res;
+            } catch(e) {
+                console.error(e);
+                ctx.status = 500;
+                ctx.response.body = 'Error. Method "allTickets"';
+            }
+            return;
+        case 'ticketById':
+            try {
+                const { id } = ctx.request.query;
+                const res = ticketController.getTicketById(id);
+                ctx.response.body = res;
+            } catch(e) {
+                console.error(e);
+                ctx.status = 500;
+                ctx.response.body = 'Error. Method "ticketById"';
+            }
             return;
         case 'createTicket':
             try {
                 const { date, fullText, id, text } = ctx.request.body;
                 const res = ticketController.createTicket(date, fullText, id, text);
+                ctx.response.body = ticketController.tickets;
             }
-            catch (err) {
-                console.error(err);
+            catch (e) {
+                console.error(e);
                 ctx.status = 500;
-                ctx.response.body = 'Internal error. Method "createTicket"';
+                ctx.response.body = 'Error. Method "createTicket"';
             }
             return;
+            case 'deleteTicket':
+                try {
+                    const { id } = ctx.request.query;
+                    ticketController.deleteTicket(id);
+                    ctx.response.body = ticketController.tickets;
+                } catch(e) {
+                    console.error(e);
+                    ctx.status = 500;
+                    ctx.response.body = 'Error. Method "deleteTicket"';
+                }
+                return;
+            case 'editTicket':
+                try {
+                    const { id, text, fullText } = ctx.request.body;
+                    ticketController.editTicket(id, text, fullText);
+                    ctx.response.body = ticketController.tickets;
+
+                } catch(e) {
+                    console.error(e);
+                    ctx.status = 500;
+                    ctx.response.body = 'Error. Method "editTicket"';
+                }
+                return;
         default:
             ctx.response.status = 404;
             return;
