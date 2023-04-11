@@ -36,6 +36,13 @@ class TicketController {
         cur.description = description;
     }
 
+    changeStatus(id) {
+        const cur = this.getTicketById(id);
+        console.log(cur.status)
+        cur.status === false ? cur.status = true : cur.status = false;
+        console.log(cur.status)
+    }
+
 }
 
 module.exports = TicketController;

@@ -60,7 +60,7 @@ app.use(async ctx => {
             try {
                 const res = ticketController.getAllTickets();
                 ctx.response.body = res;
-            } catch(e) {
+            } catch (e) {
                 console.error(e);
                 ctx.status = 500;
                 ctx.response.body = 'Error. Method "allTickets"';
@@ -71,7 +71,7 @@ app.use(async ctx => {
                 const { id } = ctx.request.query;
                 const res = ticketController.getTicketById(id);
                 ctx.response.body = res;
-            } catch(e) {
+            } catch (e) {
                 console.error(e);
                 ctx.status = 500;
                 ctx.response.body = 'Error. Method "ticketById"';
@@ -89,29 +89,40 @@ app.use(async ctx => {
                 ctx.response.body = 'Error. Method "createTicket"';
             }
             return;
-            case 'deleteTicket':
-                try {
-                    const { id } = ctx.request.query;
-                    ticketController.deleteTicket(id);
-                    ctx.response.body = ticketController.tickets;
-                } catch(e) {
-                    console.error(e);
-                    ctx.status = 500;
-                    ctx.response.body = 'Error. Method "deleteTicket"';
-                }
-                return;
-            case 'editTicket':
-                try {
-                    const { id, text, fullText } = ctx.request.body;
-                    ticketController.editTicket(id, text, fullText);
-                    ctx.response.body = ticketController.tickets;
+        case 'deleteTicket':
+            try {
+                const { id } = ctx.request.query;
+                ticketController.deleteTicket(id);
+                ctx.response.body = ticketController.tickets;
+            } catch (e) {
+                console.error(e);
+                ctx.status = 500;
+                ctx.response.body = 'Error. Method "deleteTicket"';
+            }
+            return;
+        case 'editTicket':
+            try {
+                const { id, text, fullText } = ctx.request.body;
+                ticketController.editTicket(id, text, fullText);
+                ctx.response.body = ticketController.tickets;
 
-                } catch(e) {
-                    console.error(e);
-                    ctx.status = 500;
-                    ctx.response.body = 'Error. Method "editTicket"';
-                }
-                return;
+            } catch (e) {
+                console.error(e);
+                ctx.status = 500;
+                ctx.response.body = 'Error. Method "editTicket"';
+            }
+            return;
+        case 'changeStatus':
+            try {
+                const { id } = ctx.request.query;
+                ticketController.changeStatus(id);
+                ctx.response.body = ticketController.tickets;
+            } catch (e) {
+                console.error(e);
+                ctx.status = 500;
+                ctx.response.body = 'Error. Method "changeTicket"';
+            }
+            return;
         default:
             ctx.response.status = 404;
             return;
