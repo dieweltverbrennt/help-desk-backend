@@ -7,7 +7,7 @@ class TicketController {
     }
 
     getAllTickets() {
-        const allTickets =  this.tickets.map((item) => new Ticket(item));
+        const allTickets = this.tickets.map((item) => new Ticket(item));
         return allTickets;
     }
 
@@ -20,10 +20,10 @@ class TicketController {
         }
     }
 
-    createTicket(created, description, id, name) {
-        const newTicket = new TicketFull(id, name, description, created);
+    createTicket(name, description) {
+        const newTicket = new TicketFull(name, description);
         this.tickets.push(newTicket);
-        console.log(this.tickets)
+        return newTicket;
     }
 
     deleteTicket(id) {
@@ -40,9 +40,7 @@ class TicketController {
         const cur = this.getTicketById(id);
         console.log(cur.status)
         cur.status === false ? cur.status = true : cur.status = false;
-        console.log(cur.status)
     }
-
 }
 
 module.exports = TicketController;

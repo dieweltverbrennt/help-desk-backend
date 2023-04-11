@@ -5,7 +5,6 @@ const fs = require('fs');
 const Koa = require('koa');
 const koaBody = require('koa-body').default;
 const koaStatic = require('koa-static');
-const uuid = require('uuid');
 const cors = require('@koa/cors');
 
 const app = new Koa();
@@ -79,9 +78,9 @@ app.use(async ctx => {
             return;
         case 'createTicket':
             try {
-                const { date, fullText, id, text } = ctx.request.body;
-                const res = ticketController.createTicket(date, fullText, id, text);
-                ctx.response.body = ticketController.tickets;
+                const { text, fullText } = ctx.request.body;
+                const res = ticketController.createTicket(text, fullText);
+                ctx.response.body = res;
             }
             catch (e) {
                 console.error(e);
